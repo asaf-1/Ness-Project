@@ -1,0 +1,7 @@
+{
+  "cardPrefix": "411111111111",
+  "cvcMin": 100,
+  "cvcMax": 999,
+  "expiryYearMin": 1990,
+  "expiryYearMax": 2015
+}

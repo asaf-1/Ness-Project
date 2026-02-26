@@ -1,0 +1,8 @@
+{
+  "homeCardIndexes": [1, 4, 2],
+  "viewProduct": [
+    { "id": 1, "minQty": 2, "maxQty": 5 },
+    { "id": 2, "minQty": 3, "maxQty": 7 }
+  ],
+  "lastHomeAction": "viewCart"
+}

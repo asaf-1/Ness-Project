@@ -1,0 +1,22 @@
+{
+  "name": "ness-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cross-env PLAYWRIGHT_BROWSERS_PATH=0 playwright test",
+    "test:headed": "cross-env HEADLESS=false PLAYWRIGHT_BROWSERS_PATH=0 playwright test --headed",
+    "report": "playwright show-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.3.1",
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.3.1",
+    "typescript": "^5.9.3"
+  }
+}

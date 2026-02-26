@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Playwright outputs
+test-results/
+playwright-report/
+blob-report/
+
+# Env (never commit real secrets)
+.env
+
+# Logs
+*.log
+
+# OS / Editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# TypeScript build outputs (if you ever add build step)
+dist/
+build/
+*.tsbuildinfo
+
+# Optional Playwright artifacts
+*.webm
+*.trace.zip
