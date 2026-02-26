@@ -1,26 +1,3 @@
-כן — אתה במקום הנכון ב־**Actions**.
-במסך שאתה נמצא בו עכשיו (All workflows), יש לך **workflow run אחד**. כדי להמשיך:
-
-### על מה ללחוץ עכשיו (בדיוק)
-
-1. תלחץ על השורה באמצע עם ה־❌ האדום: **“Add GitHub Actions workflow for Playwright”**
-   זה יכניס אותך לדף של ה־Run עצמו (Logs).
-
-2. בתוך דף ה־Run:
-
-* אם זה נכשל: תלחץ למעלה על **Re-run jobs** (או Re-run all jobs) אחרי שתבדוק את הסיבה.
-* אם זה הצליח: תרד למטה ותראה **Artifacts** (שם מורידים `playwright-report` / `test-results` אם שמרנו אותם).
-
-3. אם אתה רוצה להריץ ידנית workflow (מבלי לעשות push):
-
-* בצד שמאל תלחץ על **Playwright E2E (AutomationExercise)**
-* ואז בצד ימין למעלה אמור להיות כפתור **Run workflow**.
-
----
-
-## README.md מלא (עם הסעיף החדש של GitHub Actions)
-
-תעתיק את כל זה כמו שהוא ל־`README.md`:
 
 ```md
 # Ness-Project — Playwright E2E (AutomationExercise)
