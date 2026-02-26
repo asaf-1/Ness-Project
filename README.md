@@ -1,116 +1,78 @@
-
-```md
+````md
 # Ness-Project — Playwright E2E (AutomationExercise)
 
-This repository is a ready-to-run **Playwright + TypeScript** E2E automation project.
-It was built as a clean “take-home style” setup, so an interviewer can clone it and run it immediately.
+This repository is a **self-contained Playwright TypeScript project** created as a clean “take-home / interview-ready” automation assignment.
 
-## Project Goal
+It demonstrates a full **E2E web flow** on: https://www.automationexercise.com  
+including **random user signup**, **adding multiple products**, **handling modals**, **checkout screenshots**, **payment**, and **submitting a review**.
 
-Automate a full E2E flow on https://www.automationexercise.com/:
-
-1. Signup with a **random user** (new user each run)
-2. Add **multiple products** to cart (handles the site’s cart modal correctly)
-3. Proceed to **Checkout**
-4. Take **screenshots** on checkout and after purchase (order summary / totals)
-5. Fill payment details and confirm order
-6. Navigate to product page and submit a **random review** using the same user
-
-The test is designed to be stable by:
-- Using **data-qa** selectors when available
-- Handling the **cart modal** every time it appears
-- Handling **random ad overlays** (Google vignette) if they appear
+> ✅ Goal: Any interviewer (or anyone cloning the repo) can run this project **without relying on your local machine files/paths**.
 
 ---
 
-## Tech Stack / Libraries
+## ✅ What the test does (End-to-End flow)
 
-- Playwright: `@playwright/test`
-- TypeScript
-- dotenv (loads `.env`)
-- cross-env (portable env vars in scripts)
+**Signup (random user)** → **Add multiple products** → **View Cart** → **Checkout** → **Take screenshots** → **Payment** → **Submit review**
+
+### Key behaviors handled:
+- **Random user per run** (unique email) → no reuse, no local accounts needed.
+- **Cart modal popup** after each Add-to-cart:
+  - for most products: clicks **Continue Shopping**
+  - for the last product: clicks **View Cart**
+- **View Product flow**:
+  - navigates to `/product_details/{id}`
+  - changes quantity (`#quantity`)
+  - clicks **Add to cart**
+- **Random Google vignette ad** handling:
+  - if `#google_vignette` appears, the test attempts to close using `#dismiss-button`.
+- **Screenshots captured automatically** at important checkout points.
 
 ---
 
-## Repository Structure
+## 📦 Requirements (what interviewer needs installed)
 
-```
+### System prerequisites
+- **Node.js 18+** (recommended)
+- **npm** (comes with Node)
+- Internet access to download Playwright browsers on first run
 
-Ness-Project/
-├─ .github/
-│  └─ workflows/
-│     └─ playwright.yml              # GitHub Actions workflow (CI)
-├─ data/
-│  ├─ products.json                  # Product configuration used by the test
-│  └─ payment.json                   # Payment input data used by the test
-├─ src/
-│  ├─ pages/
-│  │  └─ AutomationExercisePage.ts   # Page Object / main actions wrapper
-│  └─ utils/
-│     └─ randomUser.ts               # Random user generator (unique per run)
-├─ tests/
-│  └─ Test-File.spec.ts              # ✅ MAIN test entry (runs by default)
-├─ playwright.config.ts              # Playwright config (baseURL, report, timeouts)
-├─ .env.example                      # Example environment file
-├─ .gitignore                        # Ignore local artifacts (node_modules, reports, etc.)
-├─ package.json                      # Scripts + deps
-└─ README.md
+---
 
+## 🚀 Quick start (exact steps)
+
+### 1) Clone the repository
+```bash
+git clone <REPO_URL>
+cd Ness-Project
 ````
 
-> Note: The test runner uses `testDir: "./tests"`, so only files under `/tests` run by default.
+### 2) Install dependencies
 
----
-
-## Prerequisites
-
-- Node.js **18+** recommended
-- Windows / macOS / Linux supported
-
----
-
-## Setup (Local Run)
-
-### 1) Install dependencies
 ```bash
 npm install
-````
+```
 
-### 2) Install Playwright browsers
+### 3) Install Playwright browsers
 
 ```bash
 npx playwright install
 ```
 
-### 3) Environment file
+### 4) Run the test
 
-This project uses `.env` (loaded by `dotenv` inside `playwright.config.ts`).
-
-* Copy `.env.example` → `.env`
-
-**Windows PowerShell:**
-
-```powershell
-copy .env.example .env
-```
-
----
-
-## Run Tests
-
-### Run headless (default)
+#### Headless (default)
 
 ```bash
 npm test
 ```
 
-### Run headed (see the browser)
+#### Headed (browser visible)
 
 ```bash
 npm run test:headed
 ```
 
-### Open the HTML report (after a run)
+### 5) Open the HTML report
 
 ```bash
 npm run report
@@ -118,111 +80,196 @@ npm run report
 
 ---
 
-## Where Screenshots & Reports Are Saved
+## 🧾 Dependencies (libraries list + why)
 
-During a local run Playwright creates:
+Installed under `devDependencies`:
 
-* `test-results/`  → raw outputs + attachments (screenshots)
-* `playwright-report/` → the HTML report
+* **@playwright/test**
+  Playwright test runner + browser automation
+* **typescript**
+  Strong typing and cleaner maintainable automation code
+* **dotenv**
+  Loads `.env` variables into `process.env` (configurable runs)
+* **cross-env**
+  Cross-platform env variable support (Windows/macOS/Linux)
 
-In this project the test explicitly saves screenshots at Checkout and after Order Placed.
-You will typically find them under something like:
-
-```
-test-results/
-└─ <test-name>/
-   └─ attachments/
-      ├─ 01-checkout-summary-<runId>.png
-      ├─ 02-checkout-before-place-order-<runId>.png
-      └─ 03-order-placed-<runId>.png
-```
-
----
-
-## Data Files
-
-### `data/products.json`
-
-Controls which products are used (IDs / quantities / flow type “Home card” vs “View Product”).
-
-### `data/payment.json`
-
-Controls payment form inputs (name/card/cvc/month/year).
-
-> You can modify these JSON files to change the scenario without editing the test logic.
-
----
-
-## GitHub Actions (CI) — Run in GitHub
-
-This repository includes a GitHub Actions workflow that runs the Playwright test on every:
-
-* **push**
-* **pull request**
-  and can also be triggered manually.
-
-### Manual run (recommended for interview)
-
-1. Go to the repository on GitHub
-2. Click **Actions**
-3. Select **Playwright E2E (AutomationExercise)**
-4. Click **Run workflow**
-5. Choose the branch and run
-
-### Results (Artifacts)
-
-After the workflow run finishes:
-
-1. Open the workflow run
-2. Scroll to **Artifacts**
-3. Download:
-
-   * `playwright-report` (HTML report)
-   * `test-results` (screenshots/attachments)
-
-### Env handling in CI
-
-The workflow copies `.env.example` to `.env` automatically (so the run does not depend on your local machine).
-
----
-
-## Troubleshooting
-
-### 1) “Cart Modal” blocks clicks (loop / intercept)
-
-The site shows a modal after adding products.
-This project handles it via:
-
-* “Continue Shopping” for most adds
-* “View Cart” only on the last add
-
-### 2) Random Ad Overlay (google_vignette)
-
-Sometimes a Google vignette appears and blocks the page.
-The code tries to close it using `#dismiss-button` (best-effort), including inside frames.
-
-### 3) If Playwright fails in CI
-
-* Check Actions logs (which step failed)
-* Re-run jobs
-* Download `playwright-report` artifact for full trace
-
----
-
-## Interviewer Quick Start (TL;DR)
+> (Optional) If you see TypeScript errors like “Cannot find name 'process'”, install:
 
 ```bash
-git clone <repo-url>
-cd Ness-Project
-npm install
-npx playwright install
-copy .env.example .env   # (Windows) or: cp .env.example .env
+npm i -D @types/node
+```
+
+---
+
+## 🌱 Environment variables (what to change and where)
+
+### Where is `.env.example`?
+
+✅ It must be located in the **ROOT** of the project:
+
+```
+Ness-Project/.env.example
+```
+
+### What interviewer should do:
+
+1. Copy `.env.example` → `.env`
+2. Edit values only if needed
+
+Example `.env`:
+
+```env
+BASE_URL=https://www.automationexercise.com
+HEADLESS=true
+```
+
+### What each variable means:
+
+* **BASE_URL**
+  Base site URL. Default is `https://www.automationexercise.com` if not provided.
+* **HEADLESS**
+  `true` or `false`. When `false`, browser UI is visible.
+
+✅ No other local machine configuration is required.
+
+---
+
+## 📁 Project structure (what each file/folder is for)
+
+```
+Ness-Project/
+├─ tests/
+│  └─ Test-File.spec.ts
+│     - MAIN test file (final E2E script)
+│     - Contains helper functions + full E2E flow
+│
+├─ playwright.config.ts
+│  - Playwright configuration:
+│    - baseURL from .env (BASE_URL)
+│    - reporter settings
+│    - output directories (test-results, playwright-report)
+│
+├─ data/
+│  ├─ payment.json
+│  └─ products.json
+│  - Reserved for future improvement:
+│    - move payment/product test data OUT of the test file
+│    - keep test logic clean & configurable
+│
+├─ src/
+│  ├─ pages/
+│  - Reserved for Page Object Model (POM) classes
+│
+│  └─ utils/
+│  - Reserved for reusable utilities (random generators, modal handlers, etc.)
+│
+├─ test-results/
+│  - Runtime artifacts created per test run:
+│    - screenshots
+│    - traces (if enabled)
+│
+├─ playwright-report/
+│  - Generated HTML test report
+│
+├─ package.json
+│  - Scripts + dependencies
+│
+├─ .env.example
+│  - Template env file (safe to commit)
+│
+└─ .gitignore
+   - Ensures node_modules, reports, and local env files are NOT committed
+```
+
+---
+
+## 📸 Where screenshots are saved
+
+Screenshots are saved automatically during the run:
+
+### Primary location:
+
+```
+test-results/**/
+```
+
+### Also available via report:
+
+```
+playwright-report/index.html
+```
+
+Example screenshot names:
+
+* `01-checkout-summary-<runId>.png`
+* `02-checkout-before-place-order-<runId>.png`
+* `03-order-placed-<runId>.png`
+
+---
+
+## 🧪 What to expect when running
+
+The console output contains step logs like:
+
+* `STEP 7.3 - View Product (id=1) -> set quantity -> Add to cart`
+* `📸 Screenshot saved: 01-checkout-summary-...png`
+* `✅ TEST DONE - reached review submit successfully`
+
+This makes it easy for an interviewer to understand **where** the test is and **what** failed if it fails.
+
+---
+
+## 🛠️ Common issues (and what to do)
+
+### 1) Ads / Google vignette appears
+
+The test includes an ad closer:
+
+* detects `google_vignette`
+* tries `#dismiss-button` (and fallback selectors)
+
+If the site changes the ad behavior, simply **rerun**:
+
+```bash
 npm test
-npm run report
 ```
 
-That’s it ✅
+### 2) Slow loading / flaky UI
 
+Run headed for debugging:
+
+```bash
+npm run test:headed
 ```
 
+### 3) Browsers not installed
+
+If Playwright prompts about missing browsers:
+
+```bash
+npx playwright install
+```
+
+---
+
+## ✅ Why this project is interview-ready
+
+* **Single repo** → clone & run
+* **No local paths** used
+* **Random user** each run
+* **Handles real-world flakiness** (modals + ads)
+* **Screenshots** prove the checkout summary and totals visually
+* Designed to be easily refactored into:
+
+  * Page Objects (`src/pages`)
+  * External test data (`data/*.json`)
+  * ENV-based configuration (`.env`)
+
+---
+
+## Author
+
+Asaf Nuri — QA Automation (Playwright / TypeScript)
+
+```
 
