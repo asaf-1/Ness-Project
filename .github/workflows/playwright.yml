@@ -10,6 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: "0"
+      HEADLESS: "true"
+      CI: "true"
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,13 +29,10 @@ jobs:
         run: npm ci
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps chromium
 
       - name: Prepare env
-        run: |
-          if [ -f ".env.example" ] && [ ! -f ".env" ]; then
-            cp .env.example .env
-          fi
+        run: cp .env.example .env
 
       - name: Run tests
         run: npm test
