@@ -6,8 +6,6 @@ This repository is a **self-contained Playwright TypeScript project** created as
 It demonstrates a full **E2E web flow** on: https://www.automationexercise.com  
 including **random user signup**, **adding multiple products**, **handling modals**, **checkout screenshots**, **payment**, and **submitting a review**.
 
-> ✅ Goal: Any interviewer (or anyone cloning the repo) can run this project **without relying on your local machine files/paths**.
-
 ---
 
 ## ✅ What the test does (End-to-End flow)
@@ -29,7 +27,7 @@ including **random user signup**, **adding multiple products**, **handling modal
 
 ---
 
-## 📦 Requirements (what interviewer needs installed)
+## 📦 Requirements
 
 ### System prerequisites
 - **Node.js 18+** (recommended)
@@ -215,7 +213,7 @@ The console output contains step logs like:
 * `📸 Screenshot saved: 01-checkout-summary-...png`
 * `✅ TEST DONE - reached review submit successfully`
 
-This makes it easy for an interviewer to understand **where** the test is and **what** failed if it fails.
+This makes it easy to understand **where** the test is and **what** failed if it fails.
 
 ---
 
@@ -252,7 +250,7 @@ npx playwright install
 
 ---
 
-## ✅ Why this project is interview-ready
+## ✅ interview-ready
 
 * **Single repo** → clone & run
 * **No local paths** used
