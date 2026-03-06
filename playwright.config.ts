@@ -9,7 +9,8 @@ export default defineConfig({
   expect: { timeout: 20_000 },
   retries: 0,
   reporter: [
-  ['html'],
+  ['list'],
+  ['html', { outputFolder: 'playwright-report', open: 'never' }],
   ['junit', { outputFile: 'test-results/results.xml' }]
 ],
   use: {
