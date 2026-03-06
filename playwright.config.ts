@@ -8,7 +8,10 @@ export default defineConfig({
   timeout: 240_000,
   expect: { timeout: 20_000 },
   retries: 0,
-  reporter: [['html', { open: 'never' }], ['list']],
+  reporter: [
+  ['html'],
+  ['junit', { outputFile: 'test-results/results.xml' }]
+],
   use: {
     baseURL: process.env.BASE_URL || 'https://www.automationexercise.com',
     headless: process.env.HEADLESS !== 'false',
